@@ -45,6 +45,12 @@ const cors = corsMiddleware({
 server.pre(cors.preflight);
 server.use(cors.actual);
 
+server.get('/\/(.*)?.*/', restify.plugins.serveStatic({
+  directory: `${__dirname}/dist`,
+  default: './index.html',
+  maxAge: 0
+}));
+
 server.listen(PORT, function () {
 	console.log(`Listening on ${ PORT }`);
 });
