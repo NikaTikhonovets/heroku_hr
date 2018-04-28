@@ -1,9 +1,9 @@
 {
   "database": {
-    "host": "127.0.0.1",
-    "user": "root",
-    "password": "root",
-    "database": "hr_application",
+    "host": "eu-cdbr-west-02.cleardb.net",
+    "user": "ba7f24ad4af20d",
+    "password": "cdd2f29b",
+    "database": "heroku_f5a12586c71f3d9",
     "debug": false
   },
 
