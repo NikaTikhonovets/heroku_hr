@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CandidateService} from '../../service/candidate/candidate.service';
 import {ActivatedRoute} from '@angular/router';
+import {BsModalRef} from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 @Component({
   selector: 'app-skill-modal',
@@ -11,7 +12,7 @@ import {ActivatedRoute} from '@angular/router';
 export class SkillModalComponent implements OnInit {
 
   @Input()
-  refModal = '';
+  refModal = BsModalRef;
 
   nameSkill: String = '';
 
