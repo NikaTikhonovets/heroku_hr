@@ -2,7 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Candidate} from '../../service/candidate/candidate';
 import {CandidateService} from '../../service/candidate/candidate.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {BsModalRef} from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 @Component({
   selector: 'app-review-modal',
@@ -13,7 +12,7 @@ import {BsModalRef} from 'ngx-bootstrap/modal/bs-modal-ref.service';
 export class ReviewModalComponent implements OnInit {
 
   @Input()
-  refModal = BsModalRef;
+  refModal = ' ';
 
   @Input()
   user: Candidate;

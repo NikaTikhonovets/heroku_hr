@@ -12,7 +12,7 @@ export class NotificationService {
   constructor(private http: HttpClient) { }
 
   getEventsNotification(): Observable<NotificationEvent[]> {
-    const url = `notification`;
+    const url = `/notification`;
     return this.http.get<NotificationEvent>(url)
       .catch((error: any) => {
         console.log(error);

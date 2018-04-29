@@ -45,10 +45,10 @@ module.exports = function (server) {
   server.get("/api/user", users.getUser);
   server.put("/api/user/:id", users.updateUser);
 
-  server.get('/\/(.*)?.*/', restify.plugins.serveStatic({
+  server.get('/\\/(.*)?.*/', restify.plugins.serveStatic({
     directory: `${__dirname}/../dist`,
-    file: 'index.html',
-    appendRequestPath: false
+    default: './index.html',
+    maxAge: 0
   }));
 
 };

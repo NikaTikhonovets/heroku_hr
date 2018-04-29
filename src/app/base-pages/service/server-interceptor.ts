@@ -5,7 +5,7 @@ import {Observable} from 'rxjs/Observable';
 @Injectable()
 export class ServerInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const url = 'https://yellow-team-hr.herokuapp.com/api/';
+    const url = 'http://localhost:5000/api/';
     req = req.clone({
       url: url + req.url
     });

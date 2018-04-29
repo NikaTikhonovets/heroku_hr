@@ -13,7 +13,7 @@ export class EventService {
   }
 
   public getEvents(): Observable<Event[]> {
-    const url = `events`;
+    const url = `/events`;
     return this.http.get<Event>(url)
       .catch((error: any) => {
         console.log(error);

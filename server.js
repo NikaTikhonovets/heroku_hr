@@ -7,8 +7,8 @@ const path = require('path');
 
 
 const server = restify.createServer({
-	name: "HR_Application server",
-	version: "1.0.0",
+  name: "HR_Application server",
+  version: "1.0.0",
 });
 
 server.use(plugins.jsonBodyParser());
@@ -47,7 +47,7 @@ server.use(cors.actual);
 
 
 server.listen(PORT, function () {
-	console.log(`Listening on ${ PORT }`);
+  console.log(`Listening on ${ PORT }`);
 });
 
 let routes = require('./server/routes')(server);
