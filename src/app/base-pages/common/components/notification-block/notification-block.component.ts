@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {NotificationService} from '../../../service/notification/notification.service';
-import {NotificationEvent} from '../../../service/notification/notification-event';
-import {NotificationCandidate} from '../../../service/notification/notification-candidate';
+import {NotificationService} from '../../../../service/notification/notification.service';
+import {NotificationEvent} from '../../../../service/notification/notification-event';
+import {NotificationCandidate} from '../../../../service/notification/notification-candidate';
 
 @Component({
   selector: 'app-notification-block',
@@ -14,6 +14,11 @@ export class NotificationBlockComponent implements OnInit{
   events:NotificationEvent[];
   candidates:NotificationCandidate[];
 
+  isAllCandidates: boolean = false;
+  isAllEvents: boolean = false;
+  isEvents: boolean = true;
+  isCandidates: boolean = true;
+
   ngOnInit(): void {
     this.getEvents();
     this.getNewCandidates();
@@ -23,11 +28,13 @@ export class NotificationBlockComponent implements OnInit{
   }
 
   getEvents() {
-    this.notificationService.getEventsNotification().subscribe((data:NotificationEvent[])=>this.events = data);
+    this.notificationService.getEventsNotification().subscribe(
+      (data:NotificationEvent[])=>this.events = data);
   }
 
   getNewCandidates() {
-    this.notificationService.getCandidatesNotification().subscribe((data:NotificationCandidate[])=>this.candidates = data["data"]);
+    this.notificationService.getCandidatesNotification().subscribe(
+      (data:NotificationCandidate[])=>this.candidates = data["data"]);
+    console.log(this.candidates);
   }
-
 }

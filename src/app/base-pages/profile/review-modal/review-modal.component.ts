@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Candidate} from '../../service/candidate/candidate';
-import {CandidateService} from '../../service/candidate/candidate.service';
+import {Candidate} from '../../../service/candidate/candidate';
+import {CandidateService} from '../../../service/candidate/candidate.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {BsModalRef} from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 @Component({
   selector: 'app-review-modal',
@@ -12,10 +13,12 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class ReviewModalComponent implements OnInit {
 
   @Input()
-  refModal = ' ';
+  refModal: BsModalRef;
 
   @Input()
   user: Candidate;
+
+  review: string = '';
 
   reviews = [];
   id = +this.route.snapshot.paramMap.get('id');
@@ -35,7 +38,14 @@ export class ReviewModalComponent implements OnInit {
   }
 
   addReview(content: String) {
-    this.candidateService.addReview(this.id, content).subscribe(
-      error => console.log(error));
+    if (content.trim() != '')
+      this.candidateService.addReview(this.id, content).subscribe(
+        data => this.getReviews(),
+        error => console.log(error),
+        () => this.clearReviewField());
+  }
+
+  clearReviewField() {
+    this.review = '';
   }
 }

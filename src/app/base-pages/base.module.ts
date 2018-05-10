@@ -10,10 +10,15 @@ import {FormsModule} from '@angular/forms';
 import {FooterComponent} from './common/components/footer/footer.component';
 import {VacanciesModule} from './vacancies/vacancies.module';
 import {CandidatesModule} from './candidates/candidates.module';
+import {EventModule} from "./event/event.module";
 import {ProfileModule} from './profile/profile.module';
 import {InterviewModule} from './interview/interview.module';
 import {VacanciesComponent} from './vacancies/vacancies/vacancies.component';
 import {CandidatesComponent} from './candidates/candidates/candidates.component';
+import {BsDropdownModule} from 'ngx-bootstrap';
+import {CabinetComponent} from './cabinet/cabinet.component';
+import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   imports: [
@@ -22,8 +27,11 @@ import {CandidatesComponent} from './candidates/candidates/candidates.component'
     FormsModule,
     VacanciesModule,
     CandidatesModule,
+    EventModule,
     ProfileModule,
-    InterviewModule
+    InterviewModule,
+    BsDropdownModule.forRoot(),
+    NgMultiSelectDropDownModule.forRoot()
   ],
   declarations: [
     BaseComponent,
@@ -32,7 +40,9 @@ import {CandidatesComponent} from './candidates/candidates/candidates.component'
     SearchInputComponent,
     FooterComponent,
     VacanciesComponent,
-    CandidatesComponent
+    CandidatesComponent,
+    CabinetComponent,
+    NotFoundComponent
   ]
 })
 export class BaseModule {

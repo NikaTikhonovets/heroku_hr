@@ -7,15 +7,23 @@
 
   <div class="modal-body">
     <form #experienceForm="ngForm">
-
-      <label>
-        *Period
-        <input type="text" class="exp-period form-control" [(ngModel)]="experience.period" required name="period"
-               #period="ngModel">
-        <div [hidden]="period.valid || period.pristine" class="alert-danger">
+      <label>*Period</label>
+      <div class="exp-period">
+        <dp-date-picker [(ngModel)]="experience.start" [config]="datePickerConfig" theme="dp-material"
+                        mode="month" [ngModelOptions]="{standalone: true}" #start="ngModel" required placeholder="Form"></dp-date-picker>
+        <div [hidden]="start.valid || start.untouched" class="alert-danger">
           Period is required
         </div>
-      </label>
+        <span> - </span>
+        <dp-date-picker [(ngModel)]="experience.end" [config]="datePickerConfig" theme="dp-material"
+                        mode="month" [ngModelOptions]="{standalone: true}" #end="ngModel" required placeholder="Till"></dp-date-picker>
+        <div [hidden]="end.valid || end.untouched" class="alert-danger">
+          Period is required
+        </div>
+      </div>
+      <div [hidden]="experience.end >= experience.start" class="alert-danger">
+        Invalid period
+      </div>
 
       <label>
         Position:
@@ -44,7 +52,8 @@
   </div>
 
   <div class="modal-footer">
-    <button type="button" class="profile-button button-experience" (click)="addExperience(experience); refModal.hide()">
+    <button type="button" class="profile-button" (click)="addExperience(experience); refModal.hide()"
+            [disabled]="start.invalid || end.invalid || company.invalid || experience.end < experience.start">
       Save
     </button>
     <button type="button" class="profile-button" (click)="refModal.hide()">Close</button>

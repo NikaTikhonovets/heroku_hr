@@ -7,9 +7,10 @@ import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {ModalModule, TabsModule} from 'ngx-bootstrap';
 
-import {ServerInterceptor} from './base-pages/service/server-interceptor';
+import {ServerInterceptor} from './service/server-interceptor';
 import {BaseModule} from './base-pages/base.module';
 import {BaseRoutingModule} from './base-pages/base-routing.module';
+import {AuthGuard} from './guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {BaseRoutingModule} from './base-pages/base-routing.module';
     BaseRoutingModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: ServerInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: ServerInterceptor, multi: true},
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

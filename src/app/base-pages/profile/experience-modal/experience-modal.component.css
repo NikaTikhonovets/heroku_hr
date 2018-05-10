@@ -31,6 +31,10 @@
   background: #c0c0c0;
 }
 
+.profile-button[disabled],.profile-button[disabled]:hover {
+  opacity: 0.5;
+}
+
 input.ng-valid[required], input.ng-valid.required {
   border-left: 4px solid #42A948;
 }
@@ -42,5 +46,12 @@ input.ng-invalid[required] {
 .alert-danger {
   background: none;
   font-style: italic;
-  font-size: 11px;
+  font-size: 12px;
+}
+
+:host ::ng-deep dp-date-picker.dp-material .dp-picker-input {
+  border: 1px solid #c0c0c0;
+  border-radius: 8px;
+  padding-left: 8px;
+  width: 150px;
 }

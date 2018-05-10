@@ -2,9 +2,9 @@
   <div class="page-profile-header">
 
     <div class="breadcrumbs">
-      <p class="text-muted"><a href="/candidates"> Candidates</a> <span
-        class="glyphicon glyphicon-chevron-right"></span>
-        <a href="#" class="profile-fullName">{{user?.name}} {{user?.lastName}}</a></p>
+      <div class="route"><a routerLink="/candidates">Candidates</a></div>
+      <span class="glyphicon glyphicon-chevron-right"></span>
+      <div class="profile-fullName">{{user?.name}} {{user?.lastName}}</div>
     </div>
 
     <button class="profile-button review" (click)="openModal(reviewModal)">Review</button>
@@ -19,16 +19,13 @@
                                *ngIf="isEdit"></app-dropdown-status>
           <span class="status status-name" *ngIf="!isEdit">{{user?.status}}</span>
 
-          <img class="img-responsive" src="http://via.placeholder.com/500x350/66bfff" alt="resume">
+          <img class="img-responsive" src="https://www.tractionwise.com/wp-content/uploads/2016/04/Icon-Person.png" alt="resume">
 
-          <span class="text-muted position" *ngIf="!isEdit">{{user?.position}}</span>
-          <div class="form-group" *ngIf="isEdit">
-            <input class="text-muted position form-control" name="position" placeholder="Position"
-                   [(ngModel)]="user.position" required #position="ngModel">
-            <div [hidden]="position.valid || position.pristine" class="alert-danger">
-              Position is required
-            </div>
+          <div *ngFor="let vacancy of user?.vacancies">
+            <span class="text-muted position" *ngIf="!isEdit">{{vacancy}}</span>
           </div>
+          <ng-multiselect-dropdown [placeholder]="'Vacancy'" [data]="user.allVacancies" [(ngModel)]="user.vacancies"
+                                   [settings]="dropdownSettings" *ngIf="isEdit" [ngModelOptions]="{standalone: true}"></ng-multiselect-dropdown>
 
           <div class="full-name">
 
@@ -36,7 +33,7 @@
             <div class="form-group" *ngIf="isEdit">
               <input class="name form-control" placeholder="Name" [(ngModel)]="user.name" required name="name"
                      #name="ngModel">
-              <div [hidden]="name.valid || name.pristine" class="alert-danger">
+              <div [hidden]="name?.valid || name?.pristine" class="alert-danger">
                 Name is required
               </div>
             </div>
@@ -45,17 +42,17 @@
             <div class="form-group" *ngIf="isEdit">
               <input class="last-name form-control" placeholder="Last Name" [(ngModel)]="user.lastName" required
                      name="lastName" #lastName="ngModel">
-              <div [hidden]="lastName.valid || lastName.pristine" class="alert-danger">
+              <div [hidden]="lastName?.valid || lastName?.pristine" class="alert-danger">
                 Last Name is required
               </div>
             </div>
           </div>
 
-          <span class="salary" *ngIf="!isEdit">{{user?.payment}}$</span>
+          <span class="salary" *ngIf="!isEdit && user?.payment">{{user?.payment}}$</span>
           <div class="form-group" *ngIf="isEdit">
             <input class="salary form-control" placeholder="salary" [(ngModel)]="user.payment" required name="salary"
                    #salary="ngModel">
-            <div [hidden]="salary.valid || salary.pristine" class="alert-danger">
+            <div [hidden]="salary?.valid || salary?.pristine" class="alert-danger">
               Salary is required
             </div>
           </div>
@@ -68,13 +65,10 @@
           <div class="contact-item">
             <span class="text-muted title-info">Contact information:</span>
             <span class="text-muted number-title">Telephone:</span>
-            <span class="number-info" *ngIf="!isEdit">{{user?.phone}}</span>
+            <span class="number-info" *ngIf="!isEdit && user?.phone">{{user?.phone}}</span>
+            <span class="number-info" *ngIf="!isEdit && !user?.phone"> - </span>
             <div class="form-group" *ngIf="isEdit">
-              <input class="number-info form-control" placeholder="phone" [(ngModel)]="user.phone" required name="phone"
-                     #phone="ngModel">
-              <div [hidden]="phone.valid || phone.pristine" class="alert-danger">
-                Phone is required
-              </div>
+              <input class="number-info form-control" placeholder="phone" [(ngModel)]="user.phone" name="phone">
             </div>
           </div>
 
@@ -84,7 +78,7 @@
             <div class="form-group" *ngIf="isEdit">
               <input class="email form-control" placeholder="E-mail" [(ngModel)]="user.email" required name="email"
                      email #email="ngModel">
-              <div [hidden]="email.valid || email.pristine" class="alert-danger">
+              <div [hidden]="email?.valid || email?.pristine" class="alert-danger">
                 Email is required
               </div>
             </div>
@@ -92,13 +86,10 @@
 
           <div class="contact-item">
             <span class="text-muted">Address:</span>
-            <span class="address" *ngIf="!isEdit">{{user?.address}}</span>
+            <span class="address" *ngIf="!isEdit && user?.address">{{user?.address}}</span>
+            <span class="address" *ngIf="!isEdit && !user?.address"> - </span>
             <div class="form-group" *ngIf="isEdit">
-              <input class="address form-control" placeholder="address" [(ngModel)]="user.address" name="address"
-                     required #address="ngModel">
-              <div [hidden]="address.valid || address.pristine" class="alert-danger">
-                Address is required
-              </div>
+              <input class="address form-control" placeholder="address" [(ngModel)]="user.address" name="address">
             </div>
           </div>
 
@@ -114,25 +105,7 @@
           <button class="profile-button" (click)="openModal(experienceModal)">Add</button>
         </div>
 
-        <div class="experience">
-          <div class="experience-item" *ngFor="let experience of user?.experiences">
-            <div class="experience-info">
-              <p class="info-period"> {{experience.period}} </p>
-              <p class="text-muted info-position">{{experience.position}}</p>
-              <p class="text-muted info-location">{{experience.location}}</p>
-            </div>
-            <div class="experience-company">
-              <div class="experience-map">
-                <div class="experience-point"></div>
-                <div class="experience-line"></div>
-              </div>
-              <div class="company-info">
-                <p class="company-name">{{experience.company}}</p>
-                <p class="experience-description">{{experience.description}}</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <app-experience [experiences]="user?.experiences" [isEdit]="isEdit"></app-experience>
       </div>
 
       <div class="skill-developer">
@@ -142,27 +115,26 @@
           <button class="profile-button" (click)="openModal(skillModal)">Add</button>
         </div>
 
-        <div class="skills">
-          <span *ngFor="let skill of user?.skills">
-            {{skill.name}}
-          </span>
-        </div>
+        <app-skills [skills]="user?.skills" [isEdit]="isEdit"></app-skills>
 
       </div>
     </div>
   </div>
-  <button type="button" class="button-edit btn btn-default btn-sm" (click)="changeMode()">
-    <span class="glyphicon glyphicon-pencil" *ngIf="!isEdit"></span>
-    <span class="glyphicon glyphicon-ok" *ngIf="isEdit" (click)="saveChanges()"></span>
+  <button type="button" class="button-edit btn btn-default btn-sm" (click)="changeMode()" *ngIf="!isEdit">
+    <span class="glyphicon glyphicon-pencil"></span>
+  </button>
+  <button type="button" class="button-edit btn btn-default btn-sm" *ngIf="isEdit" (click)="saveChanges()"
+          [disabled]="name?.invalid || lastName?.invalid || salary?.invalid || email?.invalid">
+    <span class="glyphicon glyphicon-ok"></span>
   </button>
 </div>
 
 <ng-template #experienceModal>
-  <app-experience-modal [refModal]="modalRef"></app-experience-modal>
+  <app-experience-modal [refModal]="modalRef" (saveExperience)="updateInformation()"></app-experience-modal>
 </ng-template>
 
 <ng-template #skillModal>
-  <app-skill-modal [refModal]="modalRef"></app-skill-modal>
+  <app-skill-modal [refModal]="modalRef" (saveSkill)="updateInformation()"></app-skill-modal>
 </ng-template>
 
 <ng-template #reviewModal>
